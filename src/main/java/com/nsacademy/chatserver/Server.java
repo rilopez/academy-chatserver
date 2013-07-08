@@ -40,4 +40,14 @@ public class Server {
         _onlineUsers.remove(user);
         user.setStatus(UserStatus.OFFLINE);
     }
+
+    public void linkContacts(User user1, User user2) {
+        user1.addContact(user2);
+        user2.addContact(user1);
+    }
+
+    public void unlinkContacts(User user1, User user2) {
+        user1.removeContact(user2);
+        user2.removeContact(user1);
+    }
 }

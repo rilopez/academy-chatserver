@@ -1,8 +1,12 @@
 package com.nsacademy.chatserver;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 
     private UserStatus _status;
+    private List<User> _contacts = new ArrayList<User>();
 
     public User(String email) {
         _email = email;
@@ -52,5 +56,17 @@ public class User {
     @Override
     public int hashCode() {
         return _email != null ? _email.hashCode() : 0;
+    }
+
+    public List<User> getContacts() {
+        return _contacts;
+    }
+
+    public void addContact(User user) {
+        _contacts.add(user);
+    }
+
+    public void removeContact(User user) {
+        _contacts.remove(user);
     }
 }
