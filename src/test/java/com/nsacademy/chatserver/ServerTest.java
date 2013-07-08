@@ -14,8 +14,8 @@ public class ServerTest {
     public void registerUser() {
         Server server= new Server();
 
-        User alice = new User();
-        User bob = new User();
+        User alice = new User("alice@wonderland.com");
+        User bob = new User("bob@wonderland.com");
         server.registerUser(alice);
 
         assertThat(server.getRegisteredUsers(), hasItem(alice));
