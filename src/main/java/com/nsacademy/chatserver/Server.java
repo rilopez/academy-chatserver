@@ -51,10 +51,14 @@ public class Server {
         user2.removeContact(user1);
     }
 
-    public Message createMessage(User from, User to, String content) {
+    public Message sendMessage(User from, User to, String content) {
         if (!from.getContacts().contains(to)) {
             throw new IllegalArgumentException("user " + to + " is not a contact of " + from);
         }
-        return new Message(from,to, content);
+
+        Message message = new Message(from, to, content);
+        from.addChatMessage(message);
+        to.addChatMessage(message);
+        return message;
     }
 }

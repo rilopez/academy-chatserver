@@ -7,6 +7,7 @@ public class User {
 
     private UserStatus _status;
     private List<User> _contacts = new ArrayList<User>();
+    private List<Message> _chats = new ArrayList<Message>();
 
     public User(String email) {
         _email = email;
@@ -68,5 +69,13 @@ public class User {
 
     public void removeContact(User user) {
         _contacts.remove(user);
+    }
+
+    public void addChatMessage(Message message) {
+        _chats.add(message);
+    }
+
+    public List<Message> getChats() {
+        return _chats;
     }
 }

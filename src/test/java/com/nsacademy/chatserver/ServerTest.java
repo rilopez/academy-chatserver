@@ -75,17 +75,26 @@ public class ServerTest {
         User alice = server.login("alice@wonderland.com");
         User bob = server.login("bob@wonderland.com");
         try {
-            server.createMessage(alice, bob, "Hola bob");
+            server.sendMessage(alice, bob, "Hola bob");
         } catch (Exception e) {
             assertThat(e.getMessage(), containsString("is not a contact"));
         }
 
         server.linkContacts(alice, bob);
-        Message message = server.createMessage(alice, bob, "Hola bob");
+
+        Message message = server.sendMessage(alice, bob, "Hola bob");
         assertEquals(alice, message.getFrom());
         assertEquals(bob, message.getTo());
         assertEquals("Hola bob", message.getContent());
+        assertThat(alice.getChats(),hasItem(message));
+        assertThat(bob.getChats(),hasItem(message));
     }
+
+    /*
+  TODO  How do we deal with conflicting information?
+  TODO  How do we make our server scale?
+  TODO  How we do prevent denial of service attacks?
+     */
 
     private Server createServerWithUsers(String... emails) {
         Server server = new Server();
