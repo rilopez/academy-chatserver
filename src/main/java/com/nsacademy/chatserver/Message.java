@@ -5,6 +5,15 @@ public class Message {
     private User _to;
     private String _content;
 
+    public Message() {
+    }
+
+    public Message(User from, User to, String content) {
+        _from = from;
+        _to = to;
+        _content = content;
+    }
+
     public void setFrom(User from) {
         _from = from;
     }

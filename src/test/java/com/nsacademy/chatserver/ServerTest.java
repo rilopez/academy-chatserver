@@ -58,18 +58,34 @@ public class ServerTest {
         User alice = server.login("alice@wonderland.com");
         User bob = server.login("bob@wonderland.com");
 
-        server.linkContacts(alice,bob);
+        server.linkContacts(alice, bob);
 
         assertThat(alice.getContacts(), hasItem(bob));
         assertThat(bob.getContacts(), hasItem(alice));
 
-        server.unlinkContacts(alice,bob);
+        server.unlinkContacts(alice, bob);
 
         assertThat(alice.getContacts(), not(hasItem(bob)));
         assertThat(bob.getContacts(), not(hasItem(alice)));
     }
 
+    @Test
+    public void userOnlyCanMessageWithHerContacts() {
+        Server server = createServerWithUsers("alice@wonderland.com", "bob@wonderland.com");
+        User alice = server.login("alice@wonderland.com");
+        User bob = server.login("bob@wonderland.com");
+        try {
+            server.createMessage(alice, bob, "Hola bob");
+        } catch (Exception e) {
+            assertThat(e.getMessage(), containsString("is not a contact"));
+        }
 
+        server.linkContacts(alice, bob);
+        Message message = server.createMessage(alice, bob, "Hola bob");
+        assertEquals(alice, message.getFrom());
+        assertEquals(bob, message.getTo());
+        assertEquals("Hola bob", message.getContent());
+    }
 
     private Server createServerWithUsers(String... emails) {
         Server server = new Server();

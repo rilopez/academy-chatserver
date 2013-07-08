@@ -50,4 +50,11 @@ public class Server {
         user1.removeContact(user2);
         user2.removeContact(user1);
     }
+
+    public Message createMessage(User from, User to, String content) {
+        if (!from.getContacts().contains(to)) {
+            throw new IllegalArgumentException("user " + to + " is not a contact of " + from);
+        }
+        return new Message(from,to, content);
+    }
 }
